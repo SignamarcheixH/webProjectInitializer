@@ -4,6 +4,10 @@ A bash initializer which set up the folder hierarchy and basic files
 
 ![alt text](./readme_hierarchy_picture.png)
 
+## Requirements
+
+This script requires Sass installed on your development ecosystem. Please install it globally if you want to use it.
+
 
 ## How to make it work
 

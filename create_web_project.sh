@@ -1,34 +1,34 @@
 #!/bin/bash
 
 #######################################
-########    V A R I A B L E S   ##################
+########    V A R I A B L E S   #######
 #######################################
 
 htmlMainFileName="index.html"
-cssFolderName="css"
+cssFolderName="scss"
 cssMainFileName="style.css"
+scssMainFileName="style.scss"
 javascriptFolderName="javascript"
 javascriptMainFileName="script.js"
 resourcesFolderName="ressources"
-todoFileName="todo.txt"
 
 #######################################
-########    H I E R A R C H Y    #################
+########    H I E R A R C H Y    ######
 #######################################
 
 read -p "Entrez le nom du projet : " repoName
 mkdir $repoName
 cd $repoName
 
-########## G L O B A L #####################
+########## G L O B A L #################
 
 mkdir $cssFolderName
 mkdir $javascriptFolderName
 mkdir $resourcesFolderName
-touch $todoFileName
 touch $htmlMainFileName
+touch .gitignore
 
-########## H T M L #######################
+########## H T M L #####################
 
 hrefAttribute="href=\"$cssFolderName/$cssMainFileName\""
 srcAttribute="src=\"$javascriptFolderName/$javascriptMainFileName\""
@@ -37,26 +37,30 @@ cat <<EOT >> $htmlMainFileName
 <!DOCTYPE html>
 
 <html>
-        <head>
-                <meta charset="utf-8">
-                <title>$repoName</title>
-                <link rel="stylesheet" $hrefAttribute>
-        </head>
-        $todoFileName
-        <body>
-              <script $srcAttribute></script>
-        </body>
+    <head>
+        <meta charset="utf-8">
+        <title>$repoName</title>
+        <link rel="stylesheet" $hrefAttribute>
+    </head>
+    <body>
+    	<h1>Project built and ready to start !</h1>
+        <script $srcAttribute></script>
+    </body>
 </html>
 EOT
 
 
 ########## C S S #########################
 
-cd $cssFolderName
-touch $cssMainFileName
-cd ..
+touch $cssFolderName/$scssMainFileName
+sass $cssFolderName/$scssMainFileName:$cssMainFileName
 
-########## J A V A S C R I P T #################
+########## J A V A S C R I P T ###########
+ 
+touch $javascriptFolderName/$javascriptMainFileName
 
-cd $javascriptFolderName
-touch $javascriptMainFileName
+########## G I T #########################
+
+cat <<EOT >> .gitignore
+style.css.map
+EOT

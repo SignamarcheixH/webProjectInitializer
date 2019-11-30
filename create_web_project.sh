@@ -10,6 +10,7 @@ cssMainFileName="style.css"
 scssMainFileName="style.scss"
 javascriptFolderName="javascript"
 javascriptMainFileName="script.js"
+destinationFolderName="dist"
 resourcesFolderName="ressources"
 
 #######################################
@@ -25,12 +26,13 @@ cd $repoName
 mkdir $cssFolderName
 mkdir $javascriptFolderName
 mkdir $resourcesFolderName
+mkdir $destinationFolderName
 touch $htmlMainFileName
 touch .gitignore
 
 ########## H T M L #####################
 
-hrefAttribute="href=\"$cssFolderName/$cssMainFileName\""
+hrefAttribute="href=\"$destinationFolderName/$cssMainFileName\""
 srcAttribute="src=\"$javascriptFolderName/$javascriptMainFileName\""
 
 cat <<EOT >> $htmlMainFileName
@@ -53,14 +55,38 @@ EOT
 ########## C S S #########################
 
 touch $cssFolderName/$scssMainFileName
-sass $cssFolderName/$scssMainFileName:$cssMainFileName
+if hash sass 2>/dev/null; then
+	sass $cssFolderName/$scssMainFileName:$destinationFolderName/$cssMainFileName
+else
+	touch $destinationFolderName/$cssMainFileName
+fi
 
 ########## J A V A S C R I P T ###########
  
 touch $javascriptFolderName/$javascriptMainFileName
 
+touch package.json
+cat <<EOT >> package.json
+{
+  "name": "",
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.19.0",
+    "browserify": "^16.5.0"
+  }
+}
+EOT
+
+if hash npm 2>/dev/null; then
+	npm install
+fi
+
 ########## G I T #########################
 
 cat <<EOT >> .gitignore
 style.css.map
+node_modules/
 EOT

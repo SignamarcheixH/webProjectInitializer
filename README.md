@@ -6,7 +6,13 @@ A bash initializer which set up the folder hierarchy and basic files
 
 ## Requirements
 
-This script requires Sass installed on your development ecosystem. Please install it globally if you want to use it.
+This script does not require tools like Sass or npm but is designed to be more efficient with them. You can use this script if you don't have these tools installed on your ecosystem but it will be less efficient.
+
+If you have :
+   - Sass
+   - npm
+You're good to go ! [x]
+
 
 
 ## How to make it work

@@ -11,7 +11,8 @@ cssComponentsFolder="components"
 cssMixinsFolder="mixins"
 cssMainFileName="main.min.css"
 javascriptFolderName="javascript"
-javascriptMainFileName="script.js"
+javascriptMainFileName="main.min.js"
+vueMainFileName="vue.js"
 destinationFolderName="dist"
 resourcesFolderName="ressources"
 
@@ -35,7 +36,8 @@ touch .gitignore
 ########## H T M L #####################
 
 hrefAttribute="href=\"$destinationFolderName/$cssMainFileName\""
-srcAttribute="src=\"$javascriptFolderName/$javascriptMainFileName\""
+srcAttribute="src=\"$destinationFolderName/$javascriptMainFileName\""
+vueSrcAttribute="src=\"$destinationFolderName/$vueMainFileName\""
 
 cat <<EOT >> $htmlMainFileName
 <!DOCTYPE html>
@@ -48,7 +50,8 @@ cat <<EOT >> $htmlMainFileName
     </head>
     <body>
     	<h1>Project built and ready to start !</h1>
-        <script $srcAttribute></script>
+      <script $vueSrcAttribute></script>
+      <script $srcAttribute></script>
     </body>
 </html>
 EOT
@@ -76,13 +79,19 @@ cat <<EOT >> package.json
   "dependencies": {
     "axios": "^0.19.0",
     "browserify": "^16.5.0",
+    "fs": "^0.0.1-security",
     "gulp": "^4.0.2",
     "gulp-sass": "^4.0.2",
     "@babel/core": "^7.7.4",
+    "@babel/preset-env": "^7.1.5",
     "gulp-babel": "^8.0.0",
     "gulp-concat": "2.6.1",
+    "gulp-livereload": "^4.0.1",
+    "gulp-notify": "^3.2.0",
     "gulp-uglify": "3.0.2",
     "gulp-rename": "^1.4.0",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-tap": "^2.0.0",
     "vue": "^2.6.10"
   }
 }
@@ -91,65 +100,8 @@ EOT
 if hash npm 2>/dev/null; then
 	npm install
 	touch gulpfile.js
-	cat <<EOT >> gulpfile.js
-var gulp = require('gulp');
-var sass = require('gulp-sass');
-var babel = require('gulp-babel');
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-var rename = require('gulp-rename');
- 
-var paths = {
-  styles: {
-    src: 'scss/**/*.scss',
-    dest: 'dist/'
-  },
-  scripts: {
-    src: 'javascript/**/*.js',
-    dest: 'dist/'
-  }
-};
-
- 
-/*
- * Define our tasks using plain functions
- */
-
-function styles() {
-  return gulp.src(paths.styles.src)
-    .pipe(sass())
-    .pipe(rename(
-      {
-        basename: 'main',
-        suffix: '.min'
-      }
-    ))
-    .pipe(gulp.dest(paths.styles.dest));
-}
- 
-function scripts() {
-  return gulp.src(paths.scripts.src, { sourcemaps: true })
-    .pipe(babel())
-    .pipe(uglify())
-    .pipe(concat('main.min.js'))
-    .pipe(gulp.dest(paths.scripts.dest));
-}
- 
-function watch() {
-  gulp.watch(paths.scripts.src, scripts);
-  gulp.watch(paths.styles.src, styles);
-}
- 
-var build = gulp.series(gulp.parallel(styles, scripts));
- 
-exports.styles = styles;
-exports.scripts = scripts;
-exports.watch = watch;
-exports.build = build;
-
-exports.default = build;
-EOT
-
+  cat ../file_samples/vue.js >> $destinationFolderName/$vueMainFileName
+	cat ../file_samples/gulpfile_sample.txt >> gulpfile.js
 fi
 
 ########## G I T #########################

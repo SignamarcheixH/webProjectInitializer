@@ -11,6 +11,7 @@ This script does not require tools like Sass or npm but is designed to be more e
 If you have :
    - Sass
    - npm
+   
 You're good to go ! [x]
 
 

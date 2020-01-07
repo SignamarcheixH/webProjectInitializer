@@ -10,9 +10,12 @@ cssPagesFolder="pages"
 cssComponentsFolder="components"
 cssMixinsFolder="mixins"
 cssMainFileName="main.min.css"
+scssMainFileName="style.scss"
 javascriptFolderName="javascript"
+javascriptSubFolderName="js"
+vueSubFolderName="vue"
 javascriptMainFileName="main.min.js"
-vueMainFileName="vue.js"
+vueMainFileName="main-vue.min.js"
 destinationFolderName="dist"
 resourcesFolderName="ressources"
 
@@ -28,6 +31,8 @@ cd $repoName
 
 mkdir $cssFolderName
 mkdir $javascriptFolderName
+mkdir $javascriptFolderName/$javascriptSubFolderName
+mkdir $javascriptFolderName/$vueSubFolderName
 mkdir $resourcesFolderName
 mkdir $destinationFolderName
 touch $htmlMainFileName
@@ -59,14 +64,22 @@ EOT
 
 ########## C S S #########################
 
-touch $cssFolderName/$scssMainFileName
+touch $cssFolderName/$scssMainFileName 
+cat <<EOT >> $cssFolderName/$scssMainFileName
+//$cssPagesFolder
+
+//$cssComponentsFolder
+
+//$cssMixinsFolder
+EOT
 mkdir $cssFolderName/$cssPagesFolder
 mkdir $cssFolderName/$cssComponentsFolder
 mkdir $cssFolderName/$cssMixinsFolder
 
 ########## J A V A S C R I P T ###########
  
-touch $javascriptFolderName/$javascriptMainFileName
+touch $javascriptFolderName/$javascriptSubFolderName/$javascriptMainFileName
+touch $javascriptFolderName/$vueSubFolderName/$vueMainFileName
 
 touch package.json
 cat <<EOT >> package.json
@@ -107,6 +120,7 @@ fi
 ########## G I T #########################
 
 cat <<EOT >> .gitignore
-style.css.map
+package-lock.json
 node_modules/
+*.map
 EOT

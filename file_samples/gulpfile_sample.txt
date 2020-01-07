@@ -13,7 +13,7 @@ const uglify = require('gulp-uglify');
  
 const paths = {
   styles: {
-    src: 'scss/**/*.scss',
+    src: 'scss/style.scss',
     dest: 'dist/'
   },
   scripts: {

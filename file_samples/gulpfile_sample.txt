@@ -46,7 +46,7 @@ function styles() {
  
 function scripts() {
   return gulp.src(paths.scripts.src, { sourcemaps: true })
-    .pipe(babel())
+    .pipe(babel({presets: ["@babel/preset-env"]}))
     .pipe(uglify())
     .pipe(concat('main.min.js'))
     .pipe(notify({ message: 'JS generated' }))

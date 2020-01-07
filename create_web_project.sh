@@ -19,6 +19,8 @@ vueMainFileName="main-vue.min.js"
 destinationFolderName="dist"
 resourcesFolderName="ressources"
 
+user=$(whoami)
+
 #######################################
 ########    H I E R A R C H Y    ######
 #######################################
@@ -84,10 +86,10 @@ touch $javascriptFolderName/$vueSubFolderName/$vueMainFileName
 touch package.json
 cat <<EOT >> package.json
 {
-  "name": "",
+  "name": "$repoName",
   "version": "1.0.0",
   "description": "",
-  "author": "",
+  "author": "$user",
   "private": true,
   "dependencies": {
     "axios": "^0.19.0",

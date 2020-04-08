@@ -15,7 +15,6 @@ If you have :
 You're good to go ! [x]
 
 
-
 ## How to make it work
 
 Put it wherever you like, then add it under the command you like in your `.bash_profile`, `.zsh_profile`, or whatever.

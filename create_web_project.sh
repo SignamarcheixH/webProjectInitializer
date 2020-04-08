@@ -20,17 +20,21 @@ destinationFolderName="dist"
 resourcesFolderName="ressources"
 
 user=$(whoami)
+targetPath=$(pwd)
+thisScriptPath=$(dirname "$0")
 
 #######################################
 ########    H I E R A R C H Y    ######
 #######################################
 
 read -p "Entrez le nom du projet : " repoName
-mkdir $repoName
-cd $repoName
+echo "Creating the ${repoName} project"
+mkdir $targetPath/$repoName
+cd $targetPath/$repoName
 
 ########## G L O B A L #################
 
+echo "Creating global folder hierarchy"
 mkdir $cssFolderName
 mkdir $javascriptFolderName
 mkdir $javascriptFolderName/$javascriptSubFolderName
@@ -41,6 +45,8 @@ touch $htmlMainFileName
 touch .gitignore
 
 ########## H T M L #####################
+
+echo "Creating initial files"
 
 hrefAttribute="href=\"$destinationFolderName/$cssMainFileName\""
 srcAttribute="src=\"$destinationFolderName/$javascriptMainFileName\""
@@ -113,10 +119,11 @@ cat <<EOT >> package.json
 EOT
 
 if hash npm 2>/dev/null; then
+  echo "Adding npm and gulp to the project"
 	npm install
 	touch gulpfile.js
-  cat ../file_samples/vue.js >> $destinationFolderName/$vueMainFileName
-	cat ../file_samples/gulpfile_sample.txt >> gulpfile.js
+  cat $thisScriptPath/file_samples/vue.js >> $destinationFolderName/$vueMainFileName
+	cat $thisScriptPath/file_samples/gulpfile_sample.txt >> gulpfile.js
 fi
 
 ########## G I T #########################
